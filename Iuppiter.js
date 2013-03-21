@@ -417,7 +417,7 @@ LZJB.decompress = function(input) {
 		}
 	}
     
-	return get();
+	return dstart;
 };
 
 })();

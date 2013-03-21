@@ -374,12 +374,11 @@ LZJB.compress = function(input) {
  *
  * @param {String|Array} input The string or byte array that you want to
  *                             compress.
- * @param {Boolean} _bytes Returns byte array if true otherwise string.
- * @return {String|Array} Decompressed string or byte array.
+ * @return {String} Decompressed string.
  */
-LZJB.decompress = function(input, _bytes) {
-    var sstart, dstart = new Array(input.length), slen,
-        src = 0, dst = 0,
+LZJB.decompress = function(input) {
+    var sstart, dstart = "", slen,
+        src = 0,
         cpy, copymap,
         copymask = 1 << (NBBY - 1),
         mlen, offset,
@@ -388,35 +387,13 @@ LZJB.decompress = function(input, _bytes) {
     // Using byte array or not.
     if(input.constructor == Array) {
         sstart = input;
-        bytes = true;
     }
     else {
         sstart = LZJB.toByteArray(input);
-        bytes = false;
     }    
-    
-    // Default output string result.
-    if(typeof(_bytes) == 'undefined')
-        bytes = false;
-    else
-        bytes = _bytes;
     
     slen = sstart.length;    
     
-    get = function() {
-        if(bytes) {
-            return dstart;
-        }
-        else {
-	    var retval = "";
-            // Decompressed string.
-            for(i = 0; i < dst; i++)
-                retval += String.fromCharCode(dstart[i]);
-
-            return retval;
-        }
-    };   
-            
 	while (src < slen) {
 		if ((copymask <<= 1) == (1 << NBBY)) {
 			copymask = 1;
@@ -426,17 +403,17 @@ LZJB.decompress = function(input, _bytes) {
 			mlen = (sstart[src] >> (NBBY - MATCH_BITS)) + MATCH_MIN;
 			offset = ((sstart[src] << NBBY) | sstart[src + 1]) & OFFSET_MASK;
 			src += 2;
-			if ((cpy = dst - offset) >= 0)
+			if ((cpy = dstart.length - offset) >= 0)
 				while (--mlen >= 0)
-					dstart[dst++] = dstart[cpy++];
+				    dstart += dstart.charAt(cpy++);
 			else
 				/*
 				 * offset before start of destination buffer
 				 * indicates corrupt source data
 				 */
-				return get();
+			        throw "busted";
 		} else {
-			dstart[dst++] = sstart[src++];
+		        dstart += String.fromCharCode(sstart[src++]);
 		}
 	}
     

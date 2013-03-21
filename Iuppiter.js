@@ -381,7 +381,7 @@ Iuppiter.compress = function(input) {
  * @return {String|Array} Decompressed string or byte array.
  */
 Iuppiter.decompress = function(input, _bytes) {
-    var sstart, dstart = [], slen,
+    var sstart, dstart = new Array(input.length), slen,
         src = 0, dst = 0,
         cpy, copymap,
         copymask = 1 << (NBBY - 1),
@@ -411,11 +411,12 @@ Iuppiter.decompress = function(input, _bytes) {
             return dstart;
         }
         else {
+	    var retval = "";
             // Decompressed string.
             for(i = 0; i < dst; i++)
-                dstart[i] = String.fromCharCode(dstart[i]);
+                retval += String.fromCharCode(dstart[i]);
 
-            return dstart.join('')
+            return retval;
         }
     };   
             

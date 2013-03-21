@@ -1,5 +1,5 @@
 /**
-$Id: Iuppiter.js 3026 2010-06-23 10:03:13Z Bear $
+LZJB.js
 
 Copyright (c) 2010 Nuwa Information Co., Ltd, and individual contributors.
 All rights reserved.
@@ -29,13 +29,10 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-$Author: Bear $
-$Date: 2010-06-23 18:03:13 +0800 (星期三, 23 六月 2010) $
-$Revision: 3026 $
 */
 
-if (typeof Iuppiter === 'undefined')
-    Iuppiter = {
+if (typeof LZJB === 'undefined')
+    LZJB = {
         version: '$Revision: 3026 $'.substring(11).replace(" $", ""),
     };
 
@@ -45,7 +42,7 @@ if (typeof Iuppiter === 'undefined')
  * @param {String} input The input string value.
  * @return {Array} A byte array from string value.
  */
-Iuppiter.toByteArray = function(input) {
+LZJB.toByteArray = function(input) {
     var b = [], i, unicode;
     for(i = 0; i < input.length; i++) {
         unicode = input.charCodeAt(i);
@@ -79,7 +76,7 @@ Iuppiter.toByteArray = function(input) {
  *            http://www.stringify.com/static/js/base64.js
  * They both under MIT License.
  */
-Iuppiter.Base64 = {
+LZJB.Base64 = {
 
     /// Encoding characters table.
     CA: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
@@ -101,16 +98,16 @@ Iuppiter.Base64 = {
         var i;
 
         for (i = 0; i < 256; i++) {
-            Iuppiter.Base64.IA[i] = -1;
-            Iuppiter.Base64.IAS[i] = -1;
+            LZJB.Base64.IA[i] = -1;
+            LZJB.Base64.IAS[i] = -1;
         }
 
-        for (i = 0, iS = Iuppiter.Base64.CA.length; i < iS; i++) {
-            Iuppiter.Base64.IA[Iuppiter.Base64.CA.charCodeAt(i)] = i;
-            Iuppiter.Base64.IAS[Iuppiter.Base64.CAS.charCodeAt(i)] = i;
+        for (i = 0, iS = LZJB.Base64.CA.length; i < iS; i++) {
+            LZJB.Base64.IA[LZJB.Base64.CA.charCodeAt(i)] = i;
+            LZJB.Base64.IAS[LZJB.Base64.CAS.charCodeAt(i)] = i;
         }
 
-        Iuppiter.Base64.IA['='] = Iuppiter.Base64.IAS['='] = 0;
+        LZJB.Base64.IA['='] = LZJB.Base64.IAS['='] = 0;
     },
 
     /**
@@ -127,14 +124,14 @@ Iuppiter.Base64 = {
             i;
 
         if(urlsafe)
-            ca = Iuppiter.Base64.CAS;
+            ca = LZJB.Base64.CAS;
         else
-            ca = Iuppiter.Base64.CA;
+            ca = LZJB.Base64.CA;
 
         if(input.constructor == Array)
             sArr = input;
         else
-            sArr = Iuppiter.toByteArray(input);
+            sArr = LZJB.toByteArray(input);
 
         sLen = sArr.length;
 
@@ -187,16 +184,16 @@ Iuppiter.Base64 = {
             i, j, r;
 
         if(urlsafe)
-            ia = Iuppiter.Base64.IAS;
+            ia = LZJB.Base64.IAS;
         else
-            ia = Iuppiter.Base64.IA;
+            ia = LZJB.Base64.IA;
 
         if(input.constructor == Array) {
             sArr = input;
             bytes = true;
         }
         else {
-            sArr = Iuppiter.toByteArray(input);
+            sArr = LZJB.toByteArray(input);
             bytes = false;
         }
 
@@ -264,7 +261,7 @@ Iuppiter.Base64 = {
     }
 };
 
-Iuppiter.Base64.init();
+LZJB.Base64.init();
 
 (function() {
 
@@ -296,7 +293,7 @@ LEMPEL_SIZE = 256;
  *                             compress.
  * @return {Array} Compressed byte array.
  */
-Iuppiter.compress = function(input) {
+LZJB.compress = function(input) {
     var sstart, dstart = [], slen,
         src = 0, dst = 0,
         cpy, copymap,
@@ -316,7 +313,7 @@ Iuppiter.compress = function(input) {
         bytes = true;
     }
     else {
-        sstart = Iuppiter.toByteArray(input);
+        sstart = LZJB.toByteArray(input);
         bytes = false;
     }
 
@@ -380,7 +377,7 @@ Iuppiter.compress = function(input) {
  * @param {Boolean} _bytes Returns byte array if true otherwise string.
  * @return {String|Array} Decompressed string or byte array.
  */
-Iuppiter.decompress = function(input, _bytes) {
+LZJB.decompress = function(input, _bytes) {
     var sstart, dstart = new Array(input.length), slen,
         src = 0, dst = 0,
         cpy, copymap,
@@ -394,7 +391,7 @@ Iuppiter.decompress = function(input, _bytes) {
         bytes = true;
     }
     else {
-        sstart = Iuppiter.toByteArray(input);
+        sstart = LZJB.toByteArray(input);
         bytes = false;
     }    
     

@@ -1,0 +1,19 @@
+{
+  "name": "lzjb-faster",
+  "version": "0.1.0",
+  "description": "npm installable lzjb lib from https://code.google.com/p/jslzjb/",
+  "keywords": [
+    "lzjb"
+  ],
+  "homepage": "https://code.google.com/p/jslzjb/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lsb/jslzjb-faster.git"
+  },
+  "main": "./Iuppiter.js",
+  "licenses": [
+    {
+      "type": "BSD-3-Clause"
+    }
+  ]
+}
